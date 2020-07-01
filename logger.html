@@ -46,7 +46,7 @@
           var id = `log-${logs++}`;
           elem.style.color = color;
           elem.setAttribute('id', id);
-          elem.setAttribute('onclick',`removeLog('${id}')`);
+          // elem.setAttribute('onclick',`removeLog('${id}')`);
           document.getElementById('log').prepend(elem);
         } else {
           console.warn('nothing to log')
@@ -57,6 +57,20 @@
         var elem = document.getElementById(id);
         elem.parentNode.removeChild(elem);
       }
+      function toggleFullScreen() {
+        var doc = window.document;
+        var docEl = doc.documentElement;
+
+        var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+        var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+        if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+          requestFullScreen.call(docEl);
+        }
+        else {
+          cancelFullScreen.call(doc);
+        }
+      }
     </script>
     <style>
       table, td {
@@ -66,7 +80,7 @@
         margin:0;
       }
       table {
-        width:100%;
+        width:99.5%;
         text-align: center;
         font-size: 60px;
       }
@@ -76,8 +90,8 @@
       .footer {
         background-color: black;
         position: fixed;
-        left: 0;
-        bottom: 0;
+        left: 1;
+        bottom: 1;
         z-index:1;
       }
       .content {
@@ -95,7 +109,7 @@
       font-style: italic;
       color:orange;
       font-size: 750%">
-    <div class="content" id="log">
+    <div class="content" id="log" onclick="toggleFullScreen()">
     </div>
     <div class="footer">
       <table id="corp" 
