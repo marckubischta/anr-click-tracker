@@ -1,9 +1,24 @@
 <html>
+  <head>
+    <link rel="stylesheet" href="https://use.typekit.net/zkv2aps.css">
+  </head>
 <body 
+  onload="document.querySelector('#content').height = window.innerHeight" 
   bgcolor="black" 
-  style="font-family: KAOMO, Hack, Source Code Pro, Futura, San Francisco, Sans Serif, normal;
+  style="
+    font-family: manometer, KAOMO, Hack, normal, serif;
+    font-weight: 400;
+    font-style: normal;
     color:orange;
     font-size: 500%">
+<span id="content" 
+  align="center"
+  style="  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);">
 <div 
   onclick="document.querySelector('#clicks').textContent = 
     Number(document.querySelector('#clicks').textContent) + 1;">+</div>
@@ -11,5 +26,6 @@
   onclick="document.querySelector('#clicks').textContent = '4';">4</div>
 <div 
   onclick="document.querySelector('#clicks').textContent -= 1;">-</div>
+</span>
 </body>
 </html>
