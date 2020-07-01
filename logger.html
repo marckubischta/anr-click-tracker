@@ -1,11 +1,12 @@
 <html>
   <head>
-    <meta name="theme-color" content="#FFA500">
+    <meta name="theme-color" content="#000000">
     <link rel="stylesheet" href="https://use.typekit.net/zkv2aps.css">
     <script>
       var controls = {}
       var logs = 0;
-      var color, click, turn = 0;
+      var side = "corp"
+      var fullscreen, color, click, turn = 0;
       function setup()
       {
         controls.corp = document.getElementById("corp")
@@ -13,18 +14,24 @@
         corp();
       }
       function runner() {
+        side = "runner";
         color = "orange";
         click = 0;
         controls.corp.parentNode.prepend(controls.runner)
         controls.corp.parentNode.removeChild(controls.corp)
+        document.querySelector('#runner').style['font-size'] = 
+          fullscreen ? "20px" : "60px";
         logMessage(`Runner Turn ${turn}`)
       }
       function corp() {
+        side = "corp";
         color = "orange";
         click = 0;
         turn += 1;
         controls.runner.parentNode.prepend(controls.corp)
         controls.runner.parentNode.removeChild(controls.runner)
+        document.querySelector('#corp').style['font-size'] =
+          fullscreen ? "20px" : "60px";
         log(document.createElement('hr'));
         logMessage(`Corp Turn ${turn}`)
       }
@@ -67,15 +74,15 @@
 
         if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
           requestFullScreen.call(docEl);
+          fullscreen = true;
           document.querySelector('body').style['font-size'] = "40px";
-          document.querySelector('#corp').style['font-size'] = "20px";
-          document.querySelector('#runner').style['font-size'] = "20px";
+          document.querySelector(`#${side}`).style['font-size'] = "20px";
         }
         else {
           cancelFullScreen.call(doc);
+          fullscreen = false;
           document.querySelector('body').style['font-size'] = "60px";
-          document.querySelector('#corp').style['font-size'] = "60px";
-          document.querySelector('#runner').style['font-size'] = "60px";
+          document.querySelector(`#${side}`).style['font-size'] = "60px";
         }
       }
     </script>
@@ -111,7 +118,10 @@
         border-radius: 16px;
         padding:16px;
         margin:0;
-        width: 90%;  
+        width: auto;  
+      }
+      .spacer {
+        height: 350px;
       }
     </style>
   </head>
@@ -126,6 +136,7 @@
     <div class="content" id="log">
       <div class="toggle" onclick="toggleFullScreen()">Toggle Fullscreen
       </div>
+      <div class="spacer"/>
     </div>
     <div class="footer">
       <table id="corp" 
