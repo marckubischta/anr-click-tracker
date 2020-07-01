@@ -1,5 +1,6 @@
 <html>
   <head>
+    <meta name="theme-color" content="#000000">
     <link rel="stylesheet" href="https://use.typekit.net/zkv2aps.css">
     <script>
       var controls = {}
@@ -46,7 +47,7 @@
           var id = `log-${logs++}`;
           elem.style.color = color;
           elem.setAttribute('id', id);
-          // elem.setAttribute('onclick',`removeLog('${id}')`);
+          elem.setAttribute('onclick',`removeLog('${id}')`);
           document.getElementById('log').prepend(elem);
         } else {
           console.warn('nothing to log')
@@ -99,6 +100,13 @@
         width:100%;
         border-collapse:separate;
       }
+      .toggle {
+        border: 2px solid;
+        border-radius: 16px;
+        padding:16px;
+        margin:0;
+        width: 90%;  
+      }
     </style>
   </head>
   <body onload="setup()" 
@@ -109,7 +117,9 @@
       font-style: italic;
       color:orange;
       font-size: 40px">
-    <div class="content" id="log" onclick="toggleFullScreen()">
+    <div class="content" id="log">
+      <div class="toggle" onclick="toggleFullScreen()">Toggle Fullscreen
+      </div>
     </div>
     <div class="footer">
       <table id="corp" 
