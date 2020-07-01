@@ -1,0 +1,146 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://use.typekit.net/zkv2aps.css">
+    <script>
+      var controls = {}
+      var logs = 0;
+      var color, click, turn = 0;
+      function setup()
+      {
+        controls.corp = document.getElementById("corp")
+        controls.runner =  document.getElementById("runner")
+        corp();
+      }
+      function runner() {
+        color = "orange";
+        click = 0;
+        controls.corp.parentNode.prepend(controls.runner)
+        controls.corp.parentNode.removeChild(controls.corp)
+        logMessage(`Runner Turn ${turn}`)
+      }
+      function corp() {
+        color = "orange";
+        click = 0;
+        turn += 1;
+        controls.runner.parentNode.prepend(controls.corp)
+        controls.runner.parentNode.removeChild(controls.runner)
+        log(document.createElement('hr'));
+        logMessage(`Corp Turn ${turn}`)
+      }
+      function add(msg) {
+        if (msg == 'Purge') {
+          click += 2;
+        }
+        logMessage(`${++click} ${msg}`);
+      };
+      function logMessage(msg) {
+        let e = document.createElement('div');
+        if (click == 0) {
+          e.style['text-align'] = "right";
+        }
+        e.textContent = msg;
+        log(e);
+      }
+      function log(elem) {
+        if(elem) {
+          var id = `log-${logs++}`;
+          elem.style.color = color;
+          elem.setAttribute('id', id);
+          elem.setAttribute('onclick',`removeLog('${id}')`);
+          document.getElementById('log').prepend(elem);
+        } else {
+          console.warn('nothing to log')
+        }
+      }
+      function removeLog(id) {
+        console.log(id)
+        var elem = document.getElementById(id);
+        elem.parentNode.removeChild(elem);
+      }
+    </script>
+    <style>
+      table, td {
+        border: 2px solid;
+        border-radius: 16px;
+        padding:16px;
+        margin:0;
+      }
+      table {
+        width:100%;
+        text-align: center;
+        font-size: 60px;
+      }
+      div {
+        width: 100%;
+      }
+      .footer {
+        background-color: black;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index:1;
+      }
+      .content {
+        display:table;
+        width:100%;
+        border-collapse:separate;
+      }
+    </style>
+  </head>
+  <body onload="setup()" 
+    bgcolor="black" 
+    style="
+      font-family: liquor-store, sans-serif;
+      font-weight: 400;
+      font-style: italic;
+      color:orange;
+      font-size: 750%">
+    <div class="content" id="log">
+    </div>
+    <div class="footer">
+      <table id="corp" 
+        style="
+          border-color: orange;
+          color: orange;
+          ">
+        <tbody>
+        <tr>
+          <td onclick="runner()">End</td>
+          <td onclick="add('Advance')">Advance</td>
+          <td onclick="add('Purge')">Purge</td>
+        </tr>
+        <tr>
+          <td onclick="add('Credit')">Credit</td>
+          <td onclick="add('Install')">Install</td>
+          <td onclick="add('Trash')">Trash</td>
+        </tr>
+        <tr>
+          <td onclick="add('Draw')">Draw</td>
+          <td onclick="add('Operation')">Operation</td>
+          <td onclick="add('Use')">Use</td>
+        </tr>
+        </tbody>
+      </table>
+      <table id="runner" 
+        style="
+          border-color: orange;
+          color: orange;
+          ">
+        <tr>
+          <td onclick="corp()">End</td>
+          <td onclick="add('Run')">Run</td>
+        </tr>
+        <tr>
+          <td onclick="add('Credit')">Credit</td>
+          <td onclick="add('Install')">Install</td>
+          <td onclick="add('Clear')">Clear</td>
+        </tr>
+        <tr>
+          <td onclick="add('Draw')">Draw</td>
+          <td onclick="add('Event')">Event</td>
+          <td onclick="add('Use')">Use</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
