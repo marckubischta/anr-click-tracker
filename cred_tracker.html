@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="https://use.typekit.net/zkv2aps.css">
+    <script>
+      var credits = 5;
+      var fullscreen = 0;
+      function setup()
+      {
+        var touchStartLoc=null
+        document.addEventListener('touchstart', e => {touchStartLoc=e.touches[0]; console.log(touchStartLoc.clientX)}, false)
+        document.querySelector('#content').height = window.innerHeight;
+        document.querySelector('li#minus').addEventListener('touchend', e => {
+          console.log(e)
+          touchEndLoc=e.changedTouches[0]
+          console.log("end", touchEndLoc.clientX)
+          if (touchStartLoc.clientX - 50 > touchEndLoc.clientX) { down(5) }
+        }, false)
+        document.querySelector('li#plus').addEventListener('touchend', e => {
+          touchEndLoc=e.changedTouches[0]
+          console.log("end", touchEndLoc.clientX)
+          if (touchStartLoc.clientX + 50 < touchEndLoc.clientX) { up(5) }
+        }, false)
+      }
+      function up(amount) {
+        credits = credits + amount;
+        let e = document.querySelector('#creds');
+        e.textContent = credits;
+      }
+      function show() {
+
+      }
+      function down(amount) {
+        credits = (amount > credits ? 0 : credits - amount)
+        let e = document.querySelector('#creds');
+        e.textContent = credits;
+      }
+    </script>
+    <style type="text/css">
+      li {
+          display: inline-block;
+      }
+    </style>
+  </head>
+<body 
+  onload="setup()" 
+  bgcolor="black" 
+  style="
+    font-family: liquorstore-3d, KAOMO, Hack, normal, serif;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color:orange;
+    list-style-type: none;
+  ">
+<span id="content" 
+  align="center"
+  style="  margin: 0;
+">
+<li id="minus"
+  style="font-size: 500%" 
+  draggable=true
+  ondragstart="down(5)"
+  onclick="down(1)">&nbsp;-&nbsp;</li>
+<li id="creds"
+  style="font-size: 1000%" 
+  onclick="show()">5</li>
+<li id="plus"
+  style="font-size: 500%" 
+  draggable=true
+  ondragstart="up(5)"
+  onclick="up(1)">&nbsp;+&nbsp;</li>
+</span>
+</body>
+</html>
